@@ -11,13 +11,17 @@ This repository contains team outliers source code.
 
 # Finnish National Agency for Education, Visualize Educational Development Statistics
 
-First we created data pipeline to parse unstructured data. Then data model was created to make data usable for analytics and visualization. Finally we created dashboard for to meaningful insights from the data.
 
+The main focus of our solution was to create an elegant, intuitive to use analysis tool that
+makes finding deep, but useful and actionable insights from the data easy.
+
+First we created data pipeline to parse unstructured data. Then data model was created to make data usable for analytics and visualization. Finally we created dashboard for to meaningful insights from the data. 
 
 ## Solution
 
-Parsing of json dump data was done with python script. Data is parsed into data tables and saved as csv files. Parsed data tables are joined in Tableau. In the tableau dashboard you can search and visualize data.
+Parsing of json dump data was done with python script. Data is parsed into data tables and saved as csv files. Parsed data tables are joined in Tableau. In the tableau dashboard you can search and visualize data. Architecture is as follows: 
 
+![alt text](https://ibb.co/df2f6Vq) 
 
 # Paulig, Cafe Intelligence Served
 
