@@ -19,7 +19,7 @@ First we created data pipeline to parse unstructured data. Then data model was c
 
 ## Solution
 
-Parsing of json dump data was done with python script. Data is parsed into data tables and saved as csv files. Parsed data tables are joined in Tableau. In the tableau dashboard you can search and visualize data. Architecture is as follows: 
+Parsing of json dump data was performed with elegant recursive python scripts. Data is parsed into data tables and saved as csv files representing different dimensional and fact data models. Parsed data tables are joined in Tableau. In the tableau dashboard you can search and visualize data. Architecture is as follows: 
 
 ![alt text](https://github.com/mrida94/junction/blob/main/opetushallitus/architecture.JPG) 
 
