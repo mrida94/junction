@@ -21,7 +21,7 @@ First we created data pipeline to parse unstructured data. Then data model was c
 
 Parsing of json dump data was done with python script. Data is parsed into data tables and saved as csv files. Parsed data tables are joined in Tableau. In the tableau dashboard you can search and visualize data. Architecture is as follows: 
 
-![alt text](https://i.ibb.co/Rg0gPsm/architecture.pn) 
+![alt text](https://github.com/mrida94/junction/blob/main/opetushallitus/architecture.JPG) 
 
 opetushallitus.py is the main function and free Tableau reader can be used to open the interactive user interface opetushallitus.twbx 
 
