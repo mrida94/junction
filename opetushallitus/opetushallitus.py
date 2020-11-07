@@ -143,6 +143,8 @@ D_LOPPUSELVITYS.to_csv('D_VARIABLES.csv', sep = '$', index=False)
 import re
 from nltk.corpus import stopwords
 from nltk.stem.snowball import SnowballStemmer
+import nltk
+nltk.download("stopwords")
 
 # Tokenize words and get common word count to get insight into the projects
 stemmer = SnowballStemmer("finnish")
