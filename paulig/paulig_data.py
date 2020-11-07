@@ -64,3 +64,23 @@ hist_weather_data = retrieve_hist_data(api_key,
 hist_weather_data[0]
 
 hist_weather_data[0].to_csv('weather_data.csv', index=False)
+
+
+#%% paulig data distinct
+
+sql3 = """
+select distinct
+HEADER_BOOKINGDATE,
+HEADER_JOURNALTIME,
+HEADER_TERMINAL,
+HEADER_CASHIER,
+HEADER_TOTAL
+from "DEV_EDW_JUNCTION"."JUNCTION_2020"."CAFE_POS_DATA"
+where header_total >= 0
+"""
+
+cur.execute(sql3)
+
+asd = cur.fetch_pandas_all()
+
+df.to_csv('snowflake_data_filtered.csv', index=False)

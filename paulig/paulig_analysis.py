@@ -12,7 +12,7 @@ from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import train_test_split
 import numpy as np
 
-df = pd.read_csv('snowflake_data.csv')
+df = pd.read_csv('snowflake_data_filtered.csv')
 wdata = pd.read_csv('weather_data.csv')
 
 #%% Format df
@@ -120,6 +120,26 @@ history_and_forecast = pd.concat([results3,results_future])
 
 history_and_forecast[['sales', 'sales_pred']].plot()
 
+#%% CREATE FAKE INVENTORY
+inv_start = 500000
+inv = [inv_start]
+for n, i in enumerate(history_and_forecast['sales_pred']):
+
+    if np.isnan(i):
+        inv.append(inv[n])
+
+    elif inv[n] < 0.3*inv_start:
+        inv.append(inv_start)
+
+    else:
+        inv.append(inv[n]-i)
+
+inv_percentage = np.array(inv)/inv_start*100
+
+history_and_forecast['inventory_per'] = inv_percentage[0:-1]
+
+history_and_forecast[['sales', 'inventory_per']].plot(subplots=True)
+
 #%% Push data to bq
 
 
@@ -127,11 +147,11 @@ from google.cloud import bigquery
 
 df_bq = history_and_forecast.reset_index()
 df_bq = df_bq.rename(columns = {'index':'timestamp'})
-
+df_bq.to_csv('paulig_model_results.csv', index=False)
 # Construct a BigQuery client object.
 bq_client = bigquery.Client()
 project_id = 'bitcoin-293512'
-destination_table = 'junction_demo.restaurant_sales_and_pred'
+destination_table = 'junction_demo.restaurant_sales_and_pred_inventory'
 table_schema = [{'name': 'timestamp', 'type': 'TIMESTAMP'},
                 {'name': 'hour', 'type': 'INT64'},
                 {'name': 'weekday', 'type': 'INT64'},
@@ -139,24 +159,26 @@ table_schema = [{'name': 'timestamp', 'type': 'TIMESTAMP'},
                 {'name': 'tempC', 'type': 'FLOAT'},
                 {'name': 'humidity', 'type': 'FLOAT'},
                 {'name': 'sales', 'type': 'FLOAT'},
-                {'name': 'sales_pred', 'type': 'FLOAT'}]
+                {'name': 'sales_pred', 'type': 'FLOAT'},
+                {'name': 'inventory_per', 'type': 'FLOAT'}]
 
 min_date = df_bq.timestamp.min().strftime('%Y-%m-%d %H:%M:%S')
 max_date = df_bq.timestamp.max().strftime('%Y-%m-%d %H:%M:%S')
-bq_client.query(
-f"""
-DELETE from {project_id}.{destination_table}
-where timestamp between {min_date} and {max_date}
-"""
-)
+# bq_client.query(
+# f"""
+# DELETE from {project_id}.{destination_table}
+# where timestamp between {min_date} and {max_date}
+# """
+# )
 # Save results to BigQuery
 
 # timestamp + Indicators + price
 df_bq.to_gbq(destination_table,
              project_id=project_id,
-             if_exists='append',
+             if_exists='replace',
              table_schema=table_schema
              )
 
+#%%
 
 
