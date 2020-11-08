@@ -30,4 +30,4 @@ opetushallitus.py is the main function and free Tableau reader can be used to op
 Transaction and weather data from Paulig's customer was utilized in ML model to predict hourly revenue. Model results and feature data are presented in google data studio dashboard. Insight from the dashboard can used to plan shfits, opening hours, and resupply of storage.
 
 ## Solution
-Gradient boosting regression model was trained based on transaction and weather data. Results are saved to google BigQuery data warehouse. Dashboard reads data from BigQuery.
+Gradient boosting regression model was trained based on transaction and weather data. Results are saved to google BigQuery data warehouse. Dashboard reads data from BigQuery. Results are also pushed to Paulig's Snowflake data warehouse.

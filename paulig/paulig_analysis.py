@@ -121,7 +121,7 @@ history_and_forecast = pd.concat([results3,results_future])
 history_and_forecast[['sales', 'sales_pred']].plot()
 
 #%% CREATE FAKE INVENTORY
-inv_start = 500000
+inv_start = 100000
 inv = [inv_start]
 for n, i in enumerate(history_and_forecast['sales_pred']):
 
