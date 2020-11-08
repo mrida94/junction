@@ -5,7 +5,7 @@ This repository contains team outliers source code.
 2. Paulig, Cafe Intelligence Served
 
 ### Links to demos
-1. Tableau Reader required! https://github.com/mrida94/junction/blob/main/opetushallitus/Opetushallitus.twbx
+1. Tableau Reader required! (Load the file and open with Tableau Reader) https://github.com/mrida94/junction/blob/main/opetushallitus/Opetushallitus.twbx
 2. https://datastudio.google.com/reporting/35532be8-34f1-43a3-b4ff-47be8413c40d
 
 
