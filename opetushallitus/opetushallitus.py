@@ -164,3 +164,14 @@ word_counts = word_counts.groupby(['haku_id', 'project_name','organization_name'
 
 word_counts.to_csv('word_counts.csv', index=False, sep='$')
 
+challenges = F_HAUT[F_HAUT['variable_id'] == 'textArea-4'].merge(D_VARIABLES[D_VARIABLES['level_1'] == 'Missä on ollut haasteita?'], on=['haku_id','variable_id'])[['haku_id','organization_name','project_name', 'variable_id','value']]
+
+challenges_word_counts = challenges.fillna('-1').groupby(['haku_id', 'project_name','organization_name'])['value'].apply(lambda x: x.str.lower().str.split(expand=True).stack().value_counts())
+
+challenges_word_counts = challenges_word_counts.reset_index()
+challenges_word_counts['level_3'] = challenges_word_counts['level_3'].map(lambda x: stemmer.stem(re.sub(r'\W+', '', x)))
+challenges_word_counts = challenges_word_counts[~challenges_word_counts['level_3'].isin(all_stopwords)]
+challenges_word_counts = challenges_word_counts[~challenges_word_counts['level_3'].isin(fin_stopwords)]
+challenges_word_counts = challenges_word_counts.groupby(['haku_id', 'project_name','organization_name','level_3'])['value'].sum().reset_index()
+
+challenges_word_counts.to_csv('challenges_word_counts.csv', index=False, sep='$')
